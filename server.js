@@ -1,11 +1,10 @@
-// server.js
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
 
 const app = express();
 const port = 3000;
-const API_KEY = '97a234ae2c45c883ad7f00b9dcac7123'; // Replace with your OpenWeather API key
+const API_KEY = '815c15897dd6953dd435016e80011478'; // Replace with your OpenWeather API key
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -15,6 +14,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Endpoint to fetch weather data
 app.get('/weather', async (req, res) => {
     const { city } = req.query;
 
@@ -36,7 +36,7 @@ app.get('/weather', async (req, res) => {
         console.error('Error fetching weather data:', error.response ? error.response.data : error.message);
         res.status(500).send({
             error: 'Error fetching weather data',
-            details: error.response ? error.response.data : error.message
+            details: error.response ? JSON.stringify(error.response.data) : error.message
         });
     }
 });
@@ -46,4 +46,5 @@ app.listen(port, () => {
 });
 
 
-// 97a234ae2c45c883ad7f00b9dcac7123
+
+// 815c15897dd6953dd435016e80011478
